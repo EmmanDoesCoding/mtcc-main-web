@@ -45,7 +45,7 @@ const services = [
     category: "FTIR Spectrometer",
     items: [
       { name: "With library searching and ID", price: 500 },
-      { name: "With raw data exporting and/or post processing (e.g., manual peak labeling)", price: "+300", note: "Add-on" },
+      { name: "With raw data exporting and/or post processing", sub: "e.g., manual peak labeling", price: "+300", badge: "Add-on" },
     ],
   },
 ];
@@ -79,11 +79,14 @@ export default function MaterialTesting({ onClose }) {
               <div className="mt-items">
                 {group.items.map((item, j) => (
                   <div className="mt-item" key={j}>
-                    <span className="mt-item-name">
-                      {item.name}
-                      {item.note && <span className="mt-item-badge">{item.note}</span>}
-                    </span>
-                    <span className="mt-item-price">₱ {item.price}</span>
+                    <div className="mt-item-left">
+                      <span className="mt-item-name">{item.name}</span>
+                      {item.sub && <span className="mt-item-sub">{item.sub}</span>}
+                    </div>
+                    <div className="mt-item-right">
+                      {item.badge && <span className="mt-item-badge">{item.badge}</span>}
+                      <span className="mt-item-price">{String(item.price).startsWith('+') ? `+ ₱ ${String(item.price).slice(1)}` : `₱ ${item.price}`}</span>
+                    </div>
                   </div>
                 ))}
               </div>

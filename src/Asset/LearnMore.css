@@ -216,3 +216,10 @@
   font-family: 'DM Sans', sans-serif;
   letter-spacing: 0.3px;
 }
+
+@media (max-width: 680px) {
+  .lm-header { padding: 24px 20px 16px; }
+  .lm-body { padding: 16px 20px; }
+  .lm-footer { padding: 16px 20px 20px; flex-direction: column; align-items: flex-start; gap: 12px; }
+  .lm-close-btn { width: 100%; text-align: center; }
+}

@@ -234,3 +234,10 @@
 
 .vg-lightbox-prev { left: 24px; }
 .vg-lightbox-next { right: 24px; }
+
+@media (max-width: 680px) {
+  .vg-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; padding: 16px; }
+  .vg-header { padding: 20px 16px 12px; }
+  .vg-lightbox-prev { left: 8px; }
+  .vg-lightbox-next { right: 8px; }
+}

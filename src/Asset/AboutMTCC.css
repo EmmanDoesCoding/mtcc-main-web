@@ -203,3 +203,11 @@
   transform: translateY(-2px);
   box-shadow: 0 8px 22px rgba(47, 128, 237, 0.5);
 }
+
+@media (max-width: 680px) {
+  .am-header { padding: 24px 20px 16px; }
+  .am-body { padding: 16px 20px; }
+  .am-grid { grid-template-columns: 1fr; }
+  .am-footer { padding: 16px 20px 20px; flex-direction: column; align-items: flex-start; gap: 12px; }
+  .am-close-btn { width: 100%; text-align: center; }
+}

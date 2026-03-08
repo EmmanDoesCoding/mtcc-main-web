@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import LearnMore from "./Asset/LearnMore";
 import AboutMTCC from "./Asset/AboutMTCC";
 import MaterialTesting from "./Asset/MaterialTesting";
+import BioTech from "./Asset/BioTech";
+import Calibration from "./Asset/Calibration";
 import MeetTheHeads from "./Asset/MeetTheHeads";
 import ViewGallery from "./Asset/ViewGallery";
 import "./App.css";
@@ -38,7 +40,32 @@ export default function App() {
   const [showViewGallery, setShowViewGallery] = useState(false);
   const [showAbout, setShowAbout] = useState(false);
   const [showMaterialTesting, setShowMaterialTesting] = useState(false);
+  const [showBioTech, setShowBioTech] = useState(false);
+  const [showCalibration, setShowCalibration] = useState(false);
   const [showMeetHeads, setShowMeetHeads] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuClosing, setMenuClosing] = useState(false);
+
+  const toggleMenu = () => {
+    if (menuOpen) {
+      setMenuClosing(true);
+      setTimeout(() => {
+        setMenuOpen(false);
+        setMenuClosing(false);
+      }, 200);
+    } else {
+      setMenuOpen(true);
+    }
+  };
+
+  const closeMenu = (callback) => (e) => {
+    setMenuClosing(true);
+    setTimeout(() => {
+      setMenuOpen(false);
+      setMenuClosing(false);
+    }, 200);
+    callback(e);
+  };
   const [showHubPhoto, setShowHubPhoto] = useState(false);
 
   useEffect(() => {
@@ -107,7 +134,9 @@ export default function App() {
               <span className="brand-highlight">Calibration Center</span>
             </div>
           </div>
-          <nav>
+
+          {/* Desktop nav */}
+          <nav className="nav-desktop">
             <ul className="nav-links">
               {navItems.map((item) => (
                 <li key={item}>
@@ -124,7 +153,24 @@ export default function App() {
               </li>
             </ul>
           </nav>
+
+          {/* Mobile hamburger */}
+          <button className="hamburger" onClick={toggleMenu} aria-label="Menu">
+            <span className={`ham-line ${menuOpen ? "ham-open-1" : ""}`} />
+            <span className={`ham-line ${menuOpen ? "ham-open-2" : ""}`} />
+            <span className={`ham-line ${menuOpen ? "ham-open-3" : ""}`} />
+          </button>
         </header>
+
+        {/* Mobile dropdown */}
+        {menuOpen && (
+          <div className={`mobile-menu ${menuClosing ? "menu-closing" : ""}`}>
+            <a href="#" onClick={closeMenu(scrollToAbout)}>About</a>
+            <a href="#" onClick={closeMenu(scrollToServices)}>Services</a>
+            <a href="#" onClick={closeMenu(scrollToSocials)}>Socials</a>
+            <a href="#" className="mobile-contact-btn" onClick={closeMenu(scrollToContact)}>Contact Us</a>
+          </div>
+        )}
       </div>
 
       {/* Scroll Ball */}
@@ -190,12 +236,10 @@ export default function App() {
               <a href="#" className="about-btn-secondary" onClick={(e) => { e.preventDefault(); setShowMeetHeads(true); }}>Meet the Heads</a>
             </div>
           </div>
-          <div className="about-visual">
-            <div className="about-photo-frame" onClick={() => setShowHubPhoto(true)}>
-              <img src="/HUB.jpg" alt="MTCC Hub" className="about-photo" />
-              <div className="about-photo-overlay">
-                <span className="about-photo-zoom">⤢</span>
-              </div>
+          <div className="about-photo-frame" onClick={() => setShowHubPhoto(true)}>
+            <img src="/HUB.jpg" alt="MTCC Hub" className="about-photo" />
+            <div className="about-photo-overlay">
+              <span className="about-photo-zoom">⤢</span>
             </div>
           </div>
         </div>
@@ -203,17 +247,26 @@ export default function App() {
 
       {/* Services Section */}
       <section className="services-section" ref={servicesRef}>
+        {/* Top card - text only, no photo */}
+        <div className="services-header">
+          <div className="services-header-right">
+            <span className="services-label">What We Offer</span>
+            <h2 className="services-heading">Our <span className="services-heading-accent">Services</span></h2>
+            <p className="services-subheading">We provide certified testing, biotechnology, and calibration services for researchers, engineers, and industries.</p>
+          </div>
+        </div>
+        {/* Hint + Cards below */}
         <p className="services-hint">Click on a service to view its details and pricing 👇</p>
         <div className="services-inner">
           <div className="services-card" onClick={() => setShowMaterialTesting(true)}>
             <div className="services-icon">⚙️</div>
             <h3 className="services-title">Material Testing</h3>
           </div>
-          <div className="services-card">
+          <div className="services-card" onClick={() => setShowBioTech(true)}>
             <div className="services-icon">🧬</div>
             <h3 className="services-title">Biotech</h3>
           </div>
-          <div className="services-card">
+          <div className="services-card" onClick={() => setShowCalibration(true)}>
             <div className="services-icon">📏</div>
             <h3 className="services-title">Calibration</h3>
           </div>
@@ -364,6 +417,8 @@ export default function App() {
       {showViewGallery && <ViewGallery onClose={() => setShowViewGallery(false)} />}
       {showAbout && <AboutMTCC onClose={() => setShowAbout(false)} />}
       {showMaterialTesting && <MaterialTesting onClose={() => setShowMaterialTesting(false)} />}
+      {showBioTech && <BioTech onClose={() => setShowBioTech(false)} />}
+      {showCalibration && <Calibration onClose={() => setShowCalibration(false)} />}
       {showHubPhoto && (
         <div className="hub-lightbox" onClick={() => setShowHubPhoto(false)}>
           <button className="hub-lightbox-close" onClick={() => setShowHubPhoto(false)}>✕</button>
