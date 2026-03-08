@@ -1,9 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import LearnMore from "./Asset/LearnMore";
+import AboutMTCC from "./Asset/AboutMTCC";
+import MaterialTesting from "./Asset/MaterialTesting";
+import MeetTheHeads from "./Asset/MeetTheHeads";
 import ViewGallery from "./Asset/ViewGallery";
 import "./App.css";
 
-const navItems = ["About", "Services"];
+const navItems = ["About", "Services", "Socials"];
 
 const slides = [
   { id: 1, src: "/WED-I/FEATURE1.JPG", label: "Featured Image One" },
@@ -28,8 +31,15 @@ export default function App() {
   const [mailMessage, setMailMessage] = useState("");
   const [scrolled, setScrolled] = useState(false);
   const contactRef = useRef(null);
+  const aboutRef = useRef(null);
+  const servicesRef = useRef(null);
+  const socialsRef = useRef(null);
   const [showLearnMore, setShowLearnMore] = useState(false);
   const [showViewGallery, setShowViewGallery] = useState(false);
+  const [showAbout, setShowAbout] = useState(false);
+  const [showMaterialTesting, setShowMaterialTesting] = useState(false);
+  const [showMeetHeads, setShowMeetHeads] = useState(false);
+  const [showHubPhoto, setShowHubPhoto] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 120);
@@ -38,6 +48,21 @@ export default function App() {
   }, []);
 
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+  const scrollToAbout = (e) => {
+    e.preventDefault();
+    aboutRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const scrollToServices = (e) => {
+    e.preventDefault();
+    servicesRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const scrollToSocials = (e) => {
+    e.preventDefault();
+    socialsRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   const scrollToContact = (e) => {
     e.preventDefault();
     contactRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -86,7 +111,12 @@ export default function App() {
             <ul className="nav-links">
               {navItems.map((item) => (
                 <li key={item}>
-                  <a href="#">{item}</a>
+                  <a href="#" onClick={
+                    item === "About" ? scrollToAbout :
+                    item === "Services" ? scrollToServices :
+                    item === "Socials" ? scrollToSocials :
+                    undefined
+                  }>{item}</a>
                 </li>
               ))}
               <li>
@@ -146,6 +176,112 @@ export default function App() {
         </div>
       </section>
 
+      {/* About Section */}
+      <section className="about-section" ref={aboutRef}>
+        <div className="about-inner">
+          <div className="about-text">
+            <span className="about-tag">About Us</span>
+            <h2 className="about-title">What is <span className="about-accent">MTCC</span>?</h2>
+            <p className="about-desc">
+              The Material Testing and Calibration Center (MTCC) is a state-of-the-art facility under Batangas State University dedicated to providing accurate, reliable, and accredited testing and calibration services. Committed to quality and precision, MTCC supports industries, researchers, and institutions in meeting national and international standards.
+            </p>
+            <div className="about-actions">
+              <a href="#" className="about-btn-primary" onClick={(e) => { e.preventDefault(); setShowAbout(true); }}>About MTCC</a>
+              <a href="#" className="about-btn-secondary" onClick={(e) => { e.preventDefault(); setShowMeetHeads(true); }}>Meet the Heads</a>
+            </div>
+          </div>
+          <div className="about-visual">
+            <div className="about-photo-frame" onClick={() => setShowHubPhoto(true)}>
+              <img src="/HUB.jpg" alt="MTCC Hub" className="about-photo" />
+              <div className="about-photo-overlay">
+                <span className="about-photo-zoom">⤢</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Services Section */}
+      <section className="services-section" ref={servicesRef}>
+        <p className="services-hint">Click on a service to view its details and pricing 👇</p>
+        <div className="services-inner">
+          <div className="services-card" onClick={() => setShowMaterialTesting(true)}>
+            <div className="services-icon">⚙️</div>
+            <h3 className="services-title">Material Testing</h3>
+          </div>
+          <div className="services-card">
+            <div className="services-icon">🧬</div>
+            <h3 className="services-title">Biotech</h3>
+          </div>
+          <div className="services-card">
+            <div className="services-icon">📏</div>
+            <h3 className="services-title">Calibration</h3>
+          </div>
+        </div>
+      </section>
+
+      {/* Socials Section */}
+      <section className="socials-section" ref={socialsRef}>
+        <div className="socials-inner">
+
+          {/* Left — CTA */}
+          <div className="socials-left">
+            <span className="socials-tag">Stay Connected</span>
+            <h2 className="socials-title">We're on <span className="socials-accent">Facebook</span></h2>
+            <p className="socials-sub">Follow our official page to stay up to date with our latest news, events, and announcements.</p>
+
+            <div className="socials-page-card">
+              <img src="/MTCC_LOGO.png" alt="MTCC" className="socials-page-logo" />
+              <div>
+                <p className="socials-page-name">BatStateU MTCC</p>
+                <p className="socials-page-handle">facebook.com/BatStateUMTCC</p>
+              </div>
+            </div>
+
+            <a href="https://www.facebook.com/BatStateUMTCC/" target="_blank" rel="noreferrer" className="socials-follow-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              </svg>
+              Follow Our Page
+            </a>
+          </div>
+
+          {/* Right — FB Photo Grid */}
+          <div className="socials-right">
+            <a href="https://www.facebook.com/BatStateUMTCC/" target="_blank" rel="noreferrer" className="socials-fb-grid">
+              <div className="socials-fb-top">
+                <img src="/FACEBOOK/ANN.jpg" alt="Facebook Post 1" />
+                <div className="socials-fb-hover">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                  </svg>
+                  <span>View on Facebook</span>
+                </div>
+              </div>
+              <div className="socials-fb-bottom">
+                <div className="socials-fb-small">
+                  <img src="/FACEBOOK/OUNCE.jpg" alt="Facebook Post 2" />
+                  <div className="socials-fb-hover">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
+                      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                  </div>
+                </div>
+                <div className="socials-fb-small">
+                  <img src="/FACEBOOK/MENT.jpg" alt="Facebook Post 3" />
+                  <div className="socials-fb-hover">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
+                      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+
+        </div>
+      </section>
+
       {/* Contact Section */}
       <section className="contact-section" ref={contactRef}>
         <div className="contact-inner">
@@ -173,7 +309,18 @@ export default function App() {
             <div className="contact-form">
               <input className="contact-input" type="email" placeholder="Your Email" value={mailEmail} onChange={(e) => setMailEmail(e.target.value)} />
               <input className="contact-input" type="text" placeholder="Subject" value={mailSubject} onChange={(e) => setMailSubject(e.target.value)} />
-              <textarea className="contact-input contact-textarea" placeholder="Your Message" rows="4" value={mailMessage} onChange={(e) => setMailMessage(e.target.value)} />
+              <div className="contact-textarea-wrap">
+                <textarea className="contact-input contact-textarea" placeholder="Your Message" rows="4" value={mailMessage} onChange={(e) => setMailMessage(e.target.value)} />
+                <div className="contact-upload-bar">
+                  <label className="contact-upload-btn">
+                    <input type="file" accept="image/*" style={{ display: "none" }} onChange={(e) => {
+                      const file = e.target.files[0];
+                      if (file) setMailMessage(prev => prev + `\n[Attached: ${file.name}]`);
+                    }} />
+                    📎 Attach Photo
+                  </label>
+                </div>
+              </div>
               <button className="contact-submit" onClick={handleMailto}>Send Message</button>
             </div>
           </div>
@@ -215,6 +362,15 @@ export default function App() {
       {/* Modals */}
       {showLearnMore && <LearnMore onClose={() => setShowLearnMore(false)} />}
       {showViewGallery && <ViewGallery onClose={() => setShowViewGallery(false)} />}
+      {showAbout && <AboutMTCC onClose={() => setShowAbout(false)} />}
+      {showMaterialTesting && <MaterialTesting onClose={() => setShowMaterialTesting(false)} />}
+      {showHubPhoto && (
+        <div className="hub-lightbox" onClick={() => setShowHubPhoto(false)}>
+          <button className="hub-lightbox-close" onClick={() => setShowHubPhoto(false)}>✕</button>
+          <img src="/HUB.jpg" alt="MTCC Hub" className="hub-lightbox-img" onClick={(e) => e.stopPropagation()} />
+        </div>
+      )}
+      {showMeetHeads && <MeetTheHeads onClose={() => setShowMeetHeads(false)} />}
     </div>
   );
 }
