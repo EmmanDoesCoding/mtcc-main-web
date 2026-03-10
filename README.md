@@ -41,7 +41,20 @@ A React-based informational website for the Material Testing and Calibration Cen
 
 ## March 8, 2026
 
+March 8, 2026
+
 * Updated Facebook Photo Grid
 * Updated Meet the Heads with Real Names, Positions, and Email
 * Redesigned Services Section Layout
-* Made Website Responsive for Smaller Screen Sizes
+* Made Website Responsive for Smaller Screen and for Mobile Devices
+* Added Hamburger Menu for Mobile Navigation
+* Fixed Brand Text Visibility on Smaller Screens
+* Removed Photo from Services Header Card
+
+March 9, 2026
+
+* RAdded Dark Mode Toggle
+* RAdded Full Dark Mode Theme
+* RUpdated About MTCC Modal with Correct Vision and Core Values
+* RImproved Hover Animations on All Cards
+* RAdded Hover Effect on Meet the Heads Person Cards

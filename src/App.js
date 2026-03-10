@@ -45,6 +45,14 @@ export default function App() {
   const [showMeetHeads, setShowMeetHeads] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [menuClosing, setMenuClosing] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem("mtcc-theme") === "dark";
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", darkMode ? "dark" : "light");
+    localStorage.setItem("mtcc-theme", darkMode ? "dark" : "light");
+  }, [darkMode]);
 
   const toggleMenu = () => {
     if (menuOpen) {
@@ -72,6 +80,23 @@ export default function App() {
     const handleScroll = () => setScrolled(window.scrollY > 120);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("revealed");
+          } else {
+            entry.target.classList.remove("revealed");
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -60px 0px" }
+    );
+    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
   }, []);
 
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
@@ -154,6 +179,15 @@ export default function App() {
             </ul>
           </nav>
 
+          {/* Dark mode toggle — always visible */}
+          <button
+            className="theme-toggle"
+            onClick={() => setDarkMode(!darkMode)}
+            aria-label="Toggle dark mode"
+          >
+            <span className="theme-toggle-thumb">{darkMode ? "☀️" : "🌙"}</span>
+          </button>
+
           {/* Mobile hamburger */}
           <button className="hamburger" onClick={toggleMenu} aria-label="Menu">
             <span className={`ham-line ${menuOpen ? "ham-open-1" : ""}`} />
@@ -207,7 +241,7 @@ export default function App() {
 
       {/* Headliner */}
       <section className="headliner">
-        <div className="headliner-inner">
+        <div className="headliner-inner reveal">
           <span className="headliner-tag">Featured Event</span>
           <h1 className="headliner-title">
             MTCC Celebrates <a href="https://worldengineeringday.net/" target="_blank" rel="noreferrer" className="headliner-accent headliner-link">World Engineering Day 2026</a> through Open House
@@ -224,7 +258,7 @@ export default function App() {
 
       {/* About Section */}
       <section className="about-section" ref={aboutRef}>
-        <div className="about-inner">
+        <div className="about-inner reveal">
           <div className="about-text">
             <span className="about-tag">About Us</span>
             <h2 className="about-title">What is <span className="about-accent">MTCC</span>?</h2>
@@ -248,7 +282,7 @@ export default function App() {
       {/* Services Section */}
       <section className="services-section" ref={servicesRef}>
         {/* Top card - text only, no photo */}
-        <div className="services-header">
+        <div className="services-header reveal">
           <div className="services-header-right">
             <span className="services-label">What We Offer</span>
             <h2 className="services-heading">Our <span className="services-heading-accent">Services</span></h2>
@@ -258,15 +292,15 @@ export default function App() {
         {/* Hint + Cards below */}
         <p className="services-hint">Click on a service to view its details and pricing 👇</p>
         <div className="services-inner">
-          <div className="services-card" onClick={() => setShowMaterialTesting(true)}>
+          <div className="services-card reveal" onClick={() => setShowMaterialTesting(true)}>
             <div className="services-icon">⚙️</div>
             <h3 className="services-title">Material Testing</h3>
           </div>
-          <div className="services-card" onClick={() => setShowBioTech(true)}>
+          <div className="services-card reveal reveal-delay-1" onClick={() => setShowBioTech(true)}>
             <div className="services-icon">🧬</div>
             <h3 className="services-title">Biotech</h3>
           </div>
-          <div className="services-card" onClick={() => setShowCalibration(true)}>
+          <div className="services-card reveal reveal-delay-2" onClick={() => setShowCalibration(true)}>
             <div className="services-icon">📏</div>
             <h3 className="services-title">Calibration</h3>
           </div>
@@ -275,7 +309,7 @@ export default function App() {
 
       {/* Socials Section */}
       <section className="socials-section" ref={socialsRef}>
-        <div className="socials-inner">
+        <div className="socials-inner reveal">
 
           {/* Left — CTA */}
           <div className="socials-left">
@@ -338,7 +372,7 @@ export default function App() {
       {/* Contact Section */}
       <section className="contact-section" ref={contactRef}>
         <div className="contact-inner">
-          <div className="contact-card contact-map-card">
+          <div className="contact-card contact-map-card reveal">
             <h3 className="contact-card-title">Find Us</h3>
             <p className="contact-card-sub">1F STEER Hub Bldg., Batangas State University -<br />TNEU Alangilan Campus, Batangas City, Batangas, Philippines 4200</p>
             <div className="map-frame">
@@ -355,7 +389,7 @@ export default function App() {
             </div>
           </div>
 
-          <div className="contact-card contact-email-card">
+          <div className="contact-card contact-email-card reveal reveal-delay-1">
             <div className="contact-email-icon">✉</div>
             <h3 className="contact-card-title">Email Us</h3>
             <p className="contact-card-sub">Fill in the form and we'll get back to you shortly.</p>

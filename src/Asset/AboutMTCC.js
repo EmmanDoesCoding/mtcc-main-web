@@ -34,8 +34,19 @@ export default function AboutMTCC({ onClose }) {
           <div className="am-block">
             <h3 className="am-section-title">👁️ Our Vision</h3>
             <p className="am-text">
-              To be the leading material testing and calibration center in the region, recognized for technical competence, integrity, and commitment to national development.
+              A premier national university that develops leaders in the global knowledge economy.
             </p>
+          </div>
+
+          <div className="am-block">
+            <h3 className="am-section-title">💎 Core Values</h3>
+            <div className="am-values-grid">
+              <div className="am-value-item"><span>🇵🇭</span><p>Patriotism</p></div>
+              <div className="am-value-item"><span>🤝</span><p>Integrity</p></div>
+              <div className="am-value-item"><span>⭐</span><p>Excellence</p></div>
+              <div className="am-value-item"><span>🌿</span><p>Service</p></div>
+              <div className="am-value-item"><span>💪</span><p>Resilience</p></div>
+            </div>
           </div>
 
           <div className="am-services">
