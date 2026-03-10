@@ -86,7 +86,7 @@ export default function BioTech({ onClose }) {
 
         {/* Photo */}
         <div className="bt-photo">
-          <img src="/WED-I/FEATURE2.JPG" alt="Biotech Lab" />
+          <img src="/BIOCHEM.jpg" alt="Biotech Lab" />
         </div>
 
         <div className="bt-divider" />

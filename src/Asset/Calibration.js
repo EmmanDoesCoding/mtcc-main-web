@@ -181,7 +181,7 @@ export default function Calibration({ onClose }) {
 
         {/* Photo */}
         <div className="cal-photo">
-          <img src="/WED-I/FEATURE3.JPG" alt="Calibration Lab" />
+          <img src="/CALIBRATE.jpg" alt="Calibration Lab" />
         </div>
 
         {/* Tabs */}

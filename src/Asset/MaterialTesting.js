@@ -66,7 +66,7 @@ export default function MaterialTesting({ onClose }) {
 
         {/* Photo */}
         <div className="mt-photo">
-          <img src="/WED-I/FEATURE1.JPG" alt="Material Testing" />
+          <img src="/UTM.jpg" alt="Material Testing" />
         </div>
 
         <div className="mt-divider" />
