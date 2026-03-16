@@ -23,7 +23,7 @@ const slides = [
   { id: 9, src: "/WED-I/FEATURE9.JPG", label: "Featured Image Nine" },
 ];
 
-const RECIPIENT_EMAIL = "yourtestemail@gmail.com";
+const RECIPIENT_EMAIL = "YOUR_MTCC_EMAIL_HERE";
 
 export default function App() {
   const [current, setCurrent] = useState(0);
@@ -33,6 +33,7 @@ export default function App() {
   const [mailSubject, setMailSubject] = useState("");
   const [mailMessage, setMailMessage] = useState("");
   const [scrolled, setScrolled] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const contactRef = useRef(null);
   const aboutRef = useRef(null);
   const servicesRef = useRef(null);
@@ -54,6 +55,9 @@ export default function App() {
   const toggleRef = useRef(null);
 
   const handleThemeToggle = () => {
+    const prank = new Audio("/ARAWGABI.mp3");
+    prank.play().catch(() => {});
+
     if (!document.startViewTransition) {
       setDarkMode(d => !d);
       return;
@@ -102,7 +106,13 @@ export default function App() {
   const [showHubPhoto, setShowHubPhoto] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 120);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 120);
+      const doc = document.documentElement;
+      const scrollTop = window.scrollY;
+      const scrollHeight = doc.scrollHeight - doc.clientHeight;
+      setScrollProgress(scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0);
+    };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -163,14 +173,26 @@ export default function App() {
     return () => clearInterval(timer);
   }, [current]);
 
-  const handleMailto = () => {
-    const subject = encodeURIComponent(mailSubject || "(No Subject)");
-    const body = encodeURIComponent(`From: ${mailEmail}\n\n${mailMessage}`);
-    window.location.href = `mailto:${RECIPIENT_EMAIL}?subject=${subject}&body=${body}`;
+  const handleSubmit = () => {
+    if (!mailEmail || !mailSubject || !mailMessage) return;
+    const to = encodeURIComponent(RECIPIENT_EMAIL);
+    const subject = encodeURIComponent(mailSubject);
+    const body = encodeURIComponent(
+      `From: ${mailEmail}\n\n${mailMessage}`
+    );
+    window.open(
+      `https://mail.google.com/mail/?view=cm&to=${to}&su=${subject}&body=${body}`,
+      "_blank"
+    );
   };
 
   return (
     <div className="app">
+      {/* Scroll Progress Bar */}
+      <div className="scroll-progress-track">
+        <div className="scroll-progress-bar" style={{ width: `${scrollProgress}%` }} />
+      </div>
+
       <div className="blob-1" />
       <div className="blob-2" />
 
@@ -326,7 +348,7 @@ export default function App() {
             </div>
           </div>
           <div className="about-photo-frame" onClick={() => setShowHubPhoto(true)}>
-            <img src="/HUB.jpg" alt="MTCC Hub" className="about-photo" />
+            <img src="/MTCCSIGN.jpg" alt="MTCC Hub" className="about-photo" />
             <div className="about-photo-overlay">
               <span className="about-photo-zoom">⤢</span>
             </div>
@@ -452,18 +474,11 @@ export default function App() {
               <input className="contact-input" type="email" placeholder="Your Email" value={mailEmail} onChange={(e) => setMailEmail(e.target.value)} />
               <input className="contact-input" type="text" placeholder="Subject" value={mailSubject} onChange={(e) => setMailSubject(e.target.value)} />
               <div className="contact-textarea-wrap">
-                <textarea className="contact-input contact-textarea" placeholder="Your Message" rows="4" value={mailMessage} onChange={(e) => setMailMessage(e.target.value)} />
-                <div className="contact-upload-bar">
-                  <label className="contact-upload-btn">
-                    <input type="file" accept="image/*" style={{ display: "none" }} onChange={(e) => {
-                      const file = e.target.files[0];
-                      if (file) setMailMessage(prev => prev + `\n[Attached: ${file.name}]`);
-                    }} />
-                    📎 Attach Photo
-                  </label>
-                </div>
+                <textarea className="contact-input contact-textarea" placeholder="Your Message&#10;&#10;💡 Have photos or files? Upload them to Google Drive and paste the shared link here." rows="5" value={mailMessage} onChange={(e) => setMailMessage(e.target.value)} />
               </div>
-              <button className="contact-submit" onClick={handleMailto}>Send Message</button>
+              <button className="contact-submit" onClick={handleSubmit}>
+                Send Message
+              </button>
             </div>
           </div>
         </div>
@@ -511,7 +526,7 @@ export default function App() {
       {showHubPhoto && (
         <div className="hub-lightbox" onClick={() => setShowHubPhoto(false)}>
           <button className="hub-lightbox-close" onClick={() => setShowHubPhoto(false)}>✕</button>
-          <img src="/HUB.jpg" alt="MTCC Hub" className="hub-lightbox-img" onClick={(e) => e.stopPropagation()} />
+          <img src="/MTCCSIGN.jpg" alt="MTCC Hub" className="hub-lightbox-img" onClick={(e) => e.stopPropagation()} />
         </div>
       )}
       {showMeetHeads && <MeetTheHeads onClose={() => setShowMeetHeads(false)} />}

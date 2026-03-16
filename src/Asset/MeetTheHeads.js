@@ -6,7 +6,7 @@ const heads = [
     name: "Dr. Bryan John A. Magoling, RCh",
     role: ["Center Head"],
     email: "bryanjohn.magoling@g.batstate-u.edu.ph",
-    img: "/HEADS/head1.jpg",
+    img: "/HEADS/DR_BRYAN.jpg",
   },
   {
     name: "Angelica A. Macalalad, MChem",
