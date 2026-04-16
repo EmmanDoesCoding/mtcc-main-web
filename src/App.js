@@ -34,6 +34,7 @@ export default function App() {
   const [mailMessage, setMailMessage] = useState("");
   const [scrolled, setScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const auroraRef = useRef(null);
   const contactRef = useRef(null);
   const aboutRef = useRef(null);
   const servicesRef = useRef(null);
@@ -55,9 +56,6 @@ export default function App() {
   const toggleRef = useRef(null);
 
   const handleThemeToggle = () => {
-    const prank = new Audio("/ARAWGABI.mp3");
-    prank.play().catch(() => {});
-
     if (!document.startViewTransition) {
       setDarkMode(d => !d);
       return;
@@ -112,6 +110,16 @@ export default function App() {
       const scrollTop = window.scrollY;
       const scrollHeight = doc.scrollHeight - doc.clientHeight;
       setScrollProgress(scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0);
+
+      // Aurora parallax — each layer moves at different speed
+      const y = scrollTop;
+      const layers = auroraRef.current?.querySelectorAll(".aurora-layer");
+      if (layers) {
+        layers[0]?.style.setProperty("--scroll-y", `${y * 0.15}px`);
+        layers[1]?.style.setProperty("--scroll-y", `${y * 0.25}px`);
+        layers[2]?.style.setProperty("--scroll-y", `${y * 0.1}px`);
+        layers[3]?.style.setProperty("--scroll-y", `${y * 0.2}px`);
+      }
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -128,7 +136,7 @@ export default function App() {
           }
         });
       },
-      { threshold: 0.05, rootMargin: "0px 0px -40px 0px" }
+      { threshold: 0.01, rootMargin: "0px 0px 200px 0px" }
     );
     document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
     return () => observer.disconnect();
@@ -184,10 +192,21 @@ export default function App() {
       `https://mail.google.com/mail/?view=cm&to=${to}&su=${subject}&body=${body}`,
       "_blank"
     );
+    setMailEmail("");
+    setMailSubject("");
+    setMailMessage("");
   };
 
   return (
     <div className="app">
+      {/* Aurora Background */}
+      <div className="aurora-wrap" ref={auroraRef}>
+        <div className="aurora-layer aurora-1" />
+        <div className="aurora-layer aurora-2" />
+        <div className="aurora-layer aurora-3" />
+        <div className="aurora-layer aurora-4" />
+      </div>
+
       {/* Scroll Progress Bar */}
       <div className="scroll-progress-track">
         <div className="scroll-progress-bar" style={{ width: `${scrollProgress}%` }} />
@@ -375,7 +394,7 @@ export default function App() {
           </div>
           <div className="services-card" onClick={() => setShowBioTech(true)}>
             <div className="services-icon">🧬</div>
-            <h3 className="services-title">Biotech</h3>
+            <h3 className="services-title">Biotechnology</h3>
           </div>
           <div className="services-card" onClick={() => setShowCalibration(true)}>
             <div className="services-icon">📏</div>
@@ -467,7 +486,12 @@ export default function App() {
           </div>
 
           <div className="contact-card contact-email-card">
-            <div className="contact-email-icon">✉</div>
+            <div className="contact-email-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </div>
             <h3 className="contact-card-title">Email Us</h3>
             <p className="contact-card-sub">Fill in the form and we'll get back to you shortly.</p>
             <div className="contact-form">
@@ -494,21 +518,19 @@ export default function App() {
           <div className="footer-links">
             <div className="footer-col">
               <h4>Company</h4>
-              <a href="#">About</a>
-              <a href="#">Services</a>
-              <a href="#">Careers</a>
+              <a href="#" onClick={(e) => { e.preventDefault(); scrollToAbout(); }}>About</a>
+              <a href="#" onClick={(e) => { e.preventDefault(); scrollToServices(); }}>Services</a>
+              <a href="#" onClick={(e) => { e.preventDefault(); setShowMeetHeads(true); }}>Meet the Team</a>
             </div>
             <div className="footer-col">
               <h4>Support</h4>
               <a href="#" onClick={(e) => { e.preventDefault(); setShowFAQ(true); }}>FAQ</a>
-              <a href="#">Contact Us</a>
-              <a href="#">Privacy Policy</a>
+              <a href="#" onClick={(e) => { e.preventDefault(); scrollToContact(); }}>Contact Us</a>
+              <a href="#" onClick={(e) => { e.preventDefault(); scrollToSocials(); }}>Socials</a>
             </div>
             <div className="footer-col">
               <h4>Connect</h4>
               <a href="https://www.facebook.com/BatStateUMTCC/" target="_blank" rel="noreferrer">Facebook</a>
-              <a href="#">LinkedIn</a>
-              <a href="#">Instagram</a>
             </div>
           </div>
         </div>

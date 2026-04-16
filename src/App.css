@@ -92,44 +92,131 @@ html, body {
   position: relative;
 }
 
-/* ===== DARK MODE ANIMATED GRADIENT ===== */
-.app::before {
-  content: "";
+/* ===== DARK MODE AURORA BOREALIS ===== */
+.aurora-wrap {
   position: fixed;
   inset: 0;
   z-index: 0;
-  opacity: 0;
   pointer-events: none;
-  background: linear-gradient(
-    125deg,
-    #020812 0%,
-    #0a1f3d 20%,
-    #051428 40%,
-    #0f2a4a 60%,
-    #03080f 80%,
-    #112240 100%
-  );
-  background-size: 600% 600%;
-  animation: dark-gradient-shift 8s ease infinite;
-  transition: opacity 0.6s ease;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  overflow: hidden;
+  background: #010d18;
 }
 
-[data-theme="dark"] .app::before {
+[data-theme="dark"] .aurora-wrap {
   opacity: 1;
+}
+
+.aurora-layer {
+  position: absolute;
+  left: -10%;
+  width: 120%;
+  will-change: transform, opacity;
+  mix-blend-mode: screen;
+  border-radius: 100%;
+  --scroll-y: 0px;
+}
+
+.aurora-1 {
+  height: 70vh;
+  top: calc(-30vh + var(--scroll-y, 0px));
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(10, 50, 150, 0.20) 45%,
+    rgba(20, 70, 180, 0.20) 70%,
+    transparent 100%
+  );
+  filter: blur(55px);
+  animation: wave-1 22s ease-in-out infinite;
+}
+
+.aurora-2 {
+  height: 60vh;
+  top: calc(-20vh + var(--scroll-y, 0px));
+  left: -30%;
+  width: 160%;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(80, 140, 230, 0.20) 40%,
+    rgba(100, 160, 255, 0.20) 65%,
+    transparent 100%
+  );
+  filter: blur(65px);
+  animation: wave-2 28s ease-in-out infinite;
+}
+
+.aurora-3 {
+  height: 50vh;
+  top: calc(-15vh + var(--scroll-y, 0px));
+  left: -20%;
+  width: 140%;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(40, 90, 200, 0.20) 45%,
+    rgba(20, 60, 160, 0.20) 72%,
+    transparent 100%
+  );
+  filter: blur(70px);
+  animation: wave-3 34s ease-in-out infinite;
+}
+
+.aurora-4 {
+  height: 55vh;
+  top: calc(-25vh + var(--scroll-y, 0px));
+  left: 10%;
+  width: 130%;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(120, 160, 255, 0.20) 42%,
+    rgba(90, 130, 230, 0.20) 68%,
+    transparent 100%
+  );
+  filter: blur(60px);
+  animation: wave-4 26s ease-in-out infinite;
+}
+
+@keyframes wave-1 {
+  0%   { transform: translateX(0%) translateY(0px) scaleY(1); opacity: 0.75; }
+  20%  { transform: translateX(3%) translateY(25px) scaleY(1.06); opacity: 1; }
+  40%  { transform: translateX(-2%) translateY(12px) scaleY(0.94); opacity: 0.8; }
+  60%  { transform: translateX(4%) translateY(30px) scaleY(1.08); opacity: 0.95; }
+  80%  { transform: translateX(-1%) translateY(8px) scaleY(0.97); opacity: 0.7; }
+  100% { transform: translateX(0%) translateY(0px) scaleY(1); opacity: 0.75; }
+}
+
+@keyframes wave-2 {
+  0%   { transform: translateX(0%) translateY(0px) scaleY(1); opacity: 0.65; }
+  25%  { transform: translateX(-4%) translateY(-20px) scaleY(1.07); opacity: 0.9; }
+  50%  { transform: translateX(3%) translateY(15px) scaleY(0.93); opacity: 0.55; }
+  75%  { transform: translateX(-2%) translateY(-28px) scaleY(1.05); opacity: 0.85; }
+  100% { transform: translateX(0%) translateY(0px) scaleY(1); opacity: 0.65; }
+}
+
+@keyframes wave-3 {
+  0%   { transform: translateX(0%) translateY(0px) scaleY(1); opacity: 0.55; }
+  30%  { transform: translateX(5%) translateY(22px) scaleY(1.09); opacity: 0.8; }
+  60%  { transform: translateX(-3%) translateY(-18px) scaleY(0.92); opacity: 0.45; }
+  100% { transform: translateX(0%) translateY(0px) scaleY(1); opacity: 0.55; }
+}
+
+@keyframes wave-4 {
+  0%   { transform: translateX(0%) translateY(0px) scaleY(1); opacity: 0.5; }
+  35%  { transform: translateX(-5%) translateY(-24px) scaleY(1.06); opacity: 0.75; }
+  70%  { transform: translateX(4%) translateY(18px) scaleY(0.95); opacity: 0.4; }
+  100% { transform: translateX(0%) translateY(0px) scaleY(1); opacity: 0.5; }
 }
 
 [data-theme="dark"] .blob-1,
 [data-theme="dark"] .blob-2 {
-  opacity: 0.6;
+  opacity: 0;
 }
 
-@keyframes dark-gradient-shift {
-  0%   { background-position: 0% 50%; }
-  25%  { background-position: 100% 50%; }
-  50%  { background-position: 100% 0%; }
-  75%  { background-position: 0% 100%; }
-  100% { background-position: 0% 50%; }
-}
+
 
 /* ===== AMBIENT BLOBS ===== */
 /* ===== SCROLL PROGRESS BAR ===== */
@@ -570,6 +657,12 @@ html, body {
 .contact-email-icon {
   font-size: 28px;
   margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.contact-email-icon svg {
+  display: block;
+  color: var(--text-primary);
 }
 
 .contact-form {
@@ -1487,7 +1580,7 @@ html, body {
   width: 100%;
   max-width: 1100px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
 }
 
@@ -1524,11 +1617,14 @@ html, body {
 }
 
 .services-title {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--text-primary);
   margin: 0;
   text-align: center;
+  width: 100%;
+  word-break: break-word;
+  hyphens: auto;
 }
 
 .services-desc {
