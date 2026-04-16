@@ -7,21 +7,24 @@ import Calibration from "./Asset/Calibration";
 import MeetTheHeads from "./Asset/MeetTheHeads";
 import ViewGallery from "./Asset/ViewGallery";
 import FAQ from "./Asset/Faq";
+import LearnMoreWed from "./Asset/LearnMoreWed";
+import ViewGalleryWed from "./Asset/ViewGalleryWed";
 import "./App.css";
 
 const navItems = ["About", "Services", "Socials"];
 
-const slides = [
-  { id: 1, src: "/WED-I/FEATURE1.JPG", label: "Featured Image One" },
-  { id: 2, src: "/WED-I/FEATURE2.JPG", label: "Featured Image Two" },
-  { id: 3, src: "/WED-I/FEATURE3.JPG", label: "Featured Image Three" },
-  { id: 4, src: "/WED-I/FEATURE4.JPG", label: "Featured Image Four" },
-  { id: 5, src: "/WED-I/FEATURE5.JPG", label: "Featured Image Five" },
-  { id: 6, src: "/WED-I/FEATURE6.JPG", label: "Featured Image Six" },
-  { id: 7, src: "/WED-I/FEATURE7.JPG", label: "Featured Image Seven" },
-  { id: 8, src: "/WED-I/FEATURE8.JPG", label: "Featured Image Eight" },
-  { id: 9, src: "/WED-I/FEATURE9.JPG", label: "Featured Image Nine" },
-];
+const allMlsPhotos = Array.from({ length: 85 }, (_, i) => ({
+  id: i,
+  src: `/MLS/${i}.JPG`,
+  label: `Lecture Series Photo ${i}`,
+}));
+
+function pickRandom(arr, n) {
+  const shuffled = [...arr].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, n);
+}
+
+const slides = pickRandom(allMlsPhotos, 10);
 
 const RECIPIENT_EMAIL = "YOUR_MTCC_EMAIL_HERE";
 
@@ -41,6 +44,8 @@ export default function App() {
   const socialsRef = useRef(null);
   const [showLearnMore, setShowLearnMore] = useState(false);
   const [showViewGallery, setShowViewGallery] = useState(false);
+  const [showOtherEvents, setShowOtherEvents] = useState(false);
+  const [showWedGallery, setShowWedGallery] = useState(false);
   const [showAbout, setShowAbout] = useState(false);
   const [showMaterialTesting, setShowMaterialTesting] = useState(false);
   const [showBioTech, setShowBioTech] = useState(false);
@@ -338,12 +343,12 @@ export default function App() {
       {/* Headliner */}
       <section className="headliner reveal">
         <div className="headliner-inner">
-          <span className="headliner-tag">Featured Event</span>
+          <span className="headliner-tag">Featured Event · March 30, 2026</span>
           <h1 className="headliner-title">
-            MTCC Celebrates <a href="https://worldengineeringday.net/" target="_blank" rel="noreferrer" className="headliner-accent headliner-link">World Engineering Day 2026</a> through Open House
+            MTCC Lecture Series: <span className="headliner-accent">Sample Purification and Concentration Techniques</span> for Materials and Biotechnology Research
           </h1>
           <p className="headliner-sub">
-            The Material Testing and Calibration Center opens its doors to students, engineers, and the public in celebration of World Engineering Day — showcasing cutting-edge testing equipment, live demonstrations, and the vital role of precision in engineering.
+            A seminar and hands-on demonstration on the use of the Freeze Dryer, Ultracentrifuge, and Rotary Evaporator — held for students and faculty of BS Chemistry, BS Biology, BS Petroleum Engineering, BS Biomedical Engineering, BS Chemical Engineering, and BS Food Engineering.
           </p>
           <div className="headliner-actions">
             <a href="#" className="headliner-btn-primary" onClick={(e) => { e.preventDefault(); setShowLearnMore(true); }}>Learn More</a>
@@ -404,6 +409,30 @@ export default function App() {
       </section>
 
       {/* Socials Section */}
+      {/* Other Events Section */}
+      <section className="other-events-section reveal">
+        <div className="other-events-inner">
+          <div className="other-events-header">
+            <span className="other-events-tag">Past Events</span>
+            <h2 className="other-events-title">Other <span className="other-events-accent">Events</span></h2>
+          </div>
+          <div className="other-events-card" onClick={() => setShowOtherEvents(true)}>
+            <div className="other-events-card-img">
+              <img src="/WED-I/FEATURE1.JPG" alt="World Engineering Day 2026" />
+            </div>
+            <div className="other-events-card-body">
+              <span className="other-events-card-tag">March 4, 2026</span>
+              <h3 className="other-events-card-title">MTCC Celebrates World Engineering Day 2026 through Open House</h3>
+              <p className="other-events-card-desc">The Material Testing and Calibration Center opens its doors to students, engineers, and the public in celebration of World Engineering Day — showcasing cutting-edge testing equipment, live demonstrations, and the vital role of precision in engineering.</p>
+              <div className="other-events-card-actions">
+                <span className="other-events-card-btn">View Details →</span>
+                <span className="other-events-card-btn-gallery" onClick={(e) => { e.stopPropagation(); setShowWedGallery(true); }}>View Gallery →</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="socials-section reveal" ref={socialsRef}>
         <div className="socials-inner">
 
@@ -541,6 +570,8 @@ export default function App() {
       {/* Modals */}
       {showLearnMore && <LearnMore onClose={() => setShowLearnMore(false)} />}
       {showViewGallery && <ViewGallery onClose={() => setShowViewGallery(false)} />}
+      {showOtherEvents && <LearnMoreWed onClose={() => setShowOtherEvents(false)} />}
+      {showWedGallery && <ViewGalleryWed onClose={() => setShowWedGallery(false)} />}
       {showAbout && <AboutMTCC onClose={() => setShowAbout(false)} />}
       {showMaterialTesting && <MaterialTesting onClose={() => setShowMaterialTesting(false)} />}
       {showBioTech && <BioTech onClose={() => setShowBioTech(false)} />}

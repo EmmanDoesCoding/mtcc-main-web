@@ -1,55 +1,39 @@
 import { useState } from "react";
 import "./ViewGallery.css";
 
-const images = Array.from({ length: 80 }, (_, i) => ({
+const images = Array.from({ length: 9 }, (_, i) => ({
   id: i + 1,
-  src: `/MLS/MLS${String(i + 1).padStart(2, "0")}.JPG`,
-  alt: `Lecture Series Photo ${i + 1}`,
+  src: `/WED-I/FEATURE${i + 1}.JPG`,
+  alt: `World Engineering Day Photo ${i + 1}`,
 }));
 
-export default function ViewGallery({ onClose }) {
+export default function ViewGalleryWed({ onClose }) {
   const [lightbox, setLightbox] = useState(null);
-
-  const openLightbox = (index) => setLightbox(index);
   const closeLightbox = () => setLightbox(null);
-
-  const prevImage = (e) => {
-    e.stopPropagation();
-    setLightbox((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-  };
-
-  const nextImage = (e) => {
-    e.stopPropagation();
-    setLightbox((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-  };
+  const prevImage = (e) => { e.stopPropagation(); setLightbox((p) => (p === 0 ? images.length - 1 : p - 1)); };
+  const nextImage = (e) => { e.stopPropagation(); setLightbox((p) => (p === images.length - 1 ? 0 : p + 1)); };
 
   return (
     <>
       <div className="vg-overlay" onClick={onClose}>
         <div className="vg-card" onClick={(e) => e.stopPropagation()}>
-
           <div className="vg-header">
             <div>
-              <span className="vg-tag">Event Photos · March 30, 2026</span>
-              <h2 className="vg-title">MTCC Lecture Series — Sample Purification and Concentration Techniques</h2>
+              <span className="vg-tag">Past Event · March 4, 2026</span>
+              <h2 className="vg-title">World Engineering Day — Open House</h2>
             </div>
             <button className="vg-close" onClick={onClose} aria-label="Close">✕</button>
           </div>
-
           <div className="vg-grid">
             {images.map((img, i) => (
-              <div key={img.id} className="vg-thumb" onClick={() => openLightbox(i)}>
+              <div key={img.id} className="vg-thumb" onClick={() => setLightbox(i)}>
                 <img src={img.src} alt={img.alt} />
-                <div className="vg-thumb-overlay">
-                  <span className="vg-zoom-icon">⤢</span>
-                </div>
+                <div className="vg-thumb-overlay"><span className="vg-zoom-icon">⤢</span></div>
               </div>
             ))}
           </div>
-
         </div>
       </div>
-
       {lightbox !== null && (
         <div className="vg-lightbox" onClick={closeLightbox}>
           <button className="vg-lightbox-close" onClick={closeLightbox}>✕</button>
