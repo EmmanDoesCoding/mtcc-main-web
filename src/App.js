@@ -15,7 +15,7 @@ const navItems = ["About", "Services", "Socials"];
 
 const allMlsPhotos = Array.from({ length: 84 }, (_, i) => ({
   id: i,
-  src: `/MLS/${i}.JPG`,
+  src: `/MLS/${i}.jpg`,
   label: `MTCC Lecture Series Photo ${i}`,
 }));
 
