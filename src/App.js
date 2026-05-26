@@ -13,10 +13,10 @@ import "./App.css";
 
 const navItems = ["About", "Services", "Socials"];
 
-const allMlsPhotos = Array.from({ length: 85 }, (_, i) => ({
+const allMlsPhotos = Array.from({ length: 84 }, (_, i) => ({
   id: i,
   src: `/MLS/${i}.JPG`,
-  label: `Lecture Series Photo ${i}`,
+  label: `MTCC Lecture Series Photo ${i}`,
 }));
 
 function pickRandom(arr, n) {
@@ -410,28 +410,69 @@ export default function App() {
 
       {/* Socials Section */}
       {/* Other Events Section */}
-      <section className="other-events-section reveal">
-        <div className="other-events-inner">
-          <div className="other-events-header">
-            <span className="other-events-tag">Past Events</span>
-            <h2 className="other-events-title">Other <span className="other-events-accent">Events</span></h2>
-          </div>
-          <div className="other-events-card" onClick={() => setShowOtherEvents(true)}>
-            <div className="other-events-card-img">
-              <img src="/WED-I/FEATURE1.JPG" alt="World Engineering Day 2026" />
-            </div>
-            <div className="other-events-card-body">
-              <span className="other-events-card-tag">March 4, 2026</span>
-              <h3 className="other-events-card-title">MTCC Celebrates World Engineering Day 2026 through Open House</h3>
-              <p className="other-events-card-desc">The Material Testing and Calibration Center opens its doors to students, engineers, and the public in celebration of World Engineering Day — showcasing cutting-edge testing equipment, live demonstrations, and the vital role of precision in engineering.</p>
-              <div className="other-events-card-actions">
-                <span className="other-events-card-btn">View Details →</span>
-                <span className="other-events-card-btn-gallery" onClick={(e) => { e.stopPropagation(); setShowWedGallery(true); }}>View Gallery →</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+{/* Other Events Section */}
+{/* Other Events Section */}
+<section className="other-events-section reveal">
+  <div className="other-events-inner">
+
+    <div className="headliner-inner other-event">
+
+  {/* 🔥 TOP LEFT BLOCK */}
+  <div className="other-event-header">
+    <span className="headliner-tag">
+      Past Event · March 4, 2026
+    </span>
+
+    <h3 className="other-event-section-title">
+      Other <span>Events</span>
+    </h3>
+  </div>
+
+  {/* 🔥 ACTUAL EVENT TITLE */}
+  <h2 className="headliner-title">
+    MTCC Celebrates{" "}
+    <span className="headliner-accent">
+      World Engineering Day 2026
+    </span>{" "}
+    through Open House
+  </h2>
+
+  <img
+    src="/WED-I/FEATURE4.JPG"
+    alt="World Engineering Day 2026"
+    className="other-event-img"
+  />
+
+  <p className="headliner-sub">
+    The Material Testing and Calibration Center opens its doors to
+    students, engineers, and the public showcasing testing
+    equipment, live demonstrations, and the vital role of precision
+    in engineering.
+  </p>
+
+  <div className="headliner-actions">
+    <span
+      className="headliner-btn-primary"
+      onClick={() => setShowOtherEvents(true)}
+    >
+      View Details
+    </span>
+
+    <span
+      className="headliner-btn-secondary"
+      onClick={(e) => {
+        e.stopPropagation();
+        setShowWedGallery(true);
+      }}
+    >
+      View Gallery
+    </span>
+  </div>
+
+</div>
+
+  </div>
+</section>
 
       <section className="socials-section reveal" ref={socialsRef}>
         <div className="socials-inner">

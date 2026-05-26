@@ -1,10 +1,10 @@
 import { useState } from "react";
 import "./ViewGallery.css";
 
-const images = Array.from({ length: 80 }, (_, i) => ({
-  id: i + 1,
-  src: `/MLS/MLS${String(i + 1).padStart(2, "0")}.JPG`,
-  alt: `Lecture Series Photo ${i + 1}`,
+const images = Array.from({ length: 84 }, (_, i) => ({
+  id: i,
+  src: `/MLS/${i}.JPG`,
+  label: `MTCC Lecture Series Photo ${i}`,
 }));
 
 export default function ViewGallery({ onClose }) {
