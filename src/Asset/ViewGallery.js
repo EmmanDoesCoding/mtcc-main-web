@@ -65,7 +65,17 @@ export default function ViewGallery({ onClose }) {
           <button className="vg-lightbox-close" onClick={closeLightbox}>✕</button>
           <button className="vg-lightbox-arrow vg-lightbox-prev" onClick={prevImage}>&#8592;</button>
           <div className="vg-lightbox-img-wrap" onClick={(e) => e.stopPropagation()}>
-            <img src={images[lightbox].src} alt={images[lightbox].alt} className="vg-lightbox-img" />
+            <img
+            src={images[lightbox].src}
+            alt={images[lightbox].alt}
+            className="vg-lightbox-img"
+            onError={(e) => {
+            const fallbacks = images[lightbox].srcFallbacks;
+            const currentSrc = e.target.src;
+            const nextFallback = fallbacks.find(f => !currentSrc.endsWith(f.split("/MLS/")[1]));
+            if (nextFallback) e.target.src = nextFallback;
+            }}
+            />
             <p className="vg-lightbox-counter">{lightbox + 1} / {images.length}</p>
           </div>
           <button className="vg-lightbox-arrow vg-lightbox-next" onClick={nextImage}>&#8594;</button>
