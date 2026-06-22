@@ -16,6 +16,7 @@ const navItems = ["About", "Services", "Socials"];
 const allMlsPhotos = Array.from({ length: 84 }, (_, i) => ({
   id: i,
   src: `/MLS/${i}.jpg`,
+  srcFallbacks: [`/MLS/${i}.JPG`, `/MLS/${i}.jpeg`, `/MLS/${i}.JPEG`],
   label: `MTCC Lecture Series Photo ${i}`,
 }));
 
@@ -322,7 +323,17 @@ export default function App() {
         <div className="gallery-wrapper">
           <div className="gallery-track">
             <div className={`gallery-slide ${animating ? `slide-exit-${direction}` : "slide-enter"}`}>
-              <img src={slides[current].src} alt={slides[current].label} className="gallery-img" />
+              <img
+              src={slides[current].src}
+              alt={slides[current].label}
+              className="gallery-img"
+              onError={(e) => {
+              const fallbacks = slides[current].srcFallbacks;
+              const currentSrc = e.target.src;
+              const nextFallback = fallbacks.find(f => !currentSrc.endsWith(f.split("/MLS/")[1]));
+              if (nextFallback) e.target.src = nextFallback;
+              }}
+            />
             </div>
           </div>
           <button className="gallery-arrow gallery-arrow-left" onClick={prev} aria-label="Previous">&#8592;</button>
