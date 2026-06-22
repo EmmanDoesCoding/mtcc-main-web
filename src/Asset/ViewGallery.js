@@ -4,6 +4,7 @@ import "./ViewGallery.css";
 const images = Array.from({ length: 84 }, (_, i) => ({
   id: i,
   src: `/MLS/${i}.JPG`,
+  srcFallbacks: [`/MLS/${i}.jpg`, `/MLS/${i}.jpeg`, `/MLS/${i}.JPEG`],
   label: `MTCC Lecture Series Photo ${i}`,
 }));
 
@@ -37,15 +38,24 @@ export default function ViewGallery({ onClose }) {
           </div>
 
           <div className="vg-grid">
-            {images.map((img, i) => (
-              <div key={img.id} className="vg-thumb" onClick={() => openLightbox(i)}>
-                <img src={img.src} alt={img.alt} />
-                <div className="vg-thumb-overlay">
-                  <span className="vg-zoom-icon">⤢</span>
-                </div>
-              </div>
-            ))}
-          </div>
+          {images.map((img, i) => (
+            <div key={img.id} className="vg-thumb" onClick={() => openLightbox(i)}>
+            <img
+            src={img.src}
+            alt={img.alt}
+            onError={(e) => {
+            const fallbacks = img.srcFallbacks;
+            const currentSrc = e.target.src;
+            const nextFallback = fallbacks.find(f => !currentSrc.endsWith(f.split("/MLS/")[1]));
+            if (nextFallback) e.target.src = nextFallback;
+          }}
+        />
+      <div className="vg-thumb-overlay">
+        <span className="vg-zoom-icon">⤢</span>
+      </div>
+    </div>
+  ))}
+</div>
 
         </div>
       </div>
